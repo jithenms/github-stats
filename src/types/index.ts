@@ -1,4 +1,4 @@
-import {Endpoints} from "@octokit/types";
+import { Endpoints } from "@octokit/types";
 
 export type ListCommitsResponse = Endpoints["GET /repos/{owner}/{repo}/commits"]["response"]["data"];
 export type ListPullsResponse = Endpoints["GET /repos/{owner}/{repo}/pulls"]["response"]["data"];
@@ -14,8 +14,8 @@ export type Input = {
 }
 
 export type GithubData = {
-    commits?: ListCommitsResponse
-    pulls?: ListPullsResponse
-    issues?: ListIssuesResponse
-    releases?: ListReleasesResponse
+  commits?: ListCommitsResponse
+  pulls?: ListPullsResponse
+  issues?: ListIssuesResponse
+  releases?: ListReleasesResponse
 }

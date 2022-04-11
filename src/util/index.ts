@@ -9,25 +9,33 @@ export const prepIssues = (
   issues: ListIssuesResponse
 ): {
   dates: string[];
-  issueData: number[];
+  openIssues: number[];
+  closedIssues: number[];
 } => {
   const dates = issues
     ?.map((item) => item.created_at.split("T")[0])
     .filter((value, index, self) => self.indexOf(value) === index)
     .sort();
-  const issueData: number[] = [];
+  const openIssues: number[] = [];
+  const closedIssues: number[] = [];
   if (dates)
     for (let i = 0; i < dates.length; i++) {
       issues?.map((issue) => {
         if (issue.created_at.split("T")[0] === dates[i]) {
-          if (issueData[i] == null) issueData[i] = 1;
-          else issueData[i] = issueData[i] + 1;
+          if (issue.state === "open") {
+            if (openIssues[i] == null) openIssues[i] = 1;
+            else openIssues[i] = openIssues[i] + 1;
+          } else {
+            if (closedIssues[i] == null) closedIssues[i] = 1;
+            else closedIssues[i] = closedIssues[i] + 1;
+          }
         }
       });
     }
   return {
     dates: dates,
-    issueData: issueData,
+    openIssues: openIssues,
+    closedIssues: closedIssues
   };
 };
 
@@ -67,25 +75,33 @@ export const prepPulls = (
   pulls: ListPullsResponse
 ): {
   dates: string[];
-  pullData: number[];
+  openPulls: number[];
+  closedPulls: number[];
 } => {
   const dates = pulls
     ?.map((pull) => pull.created_at.split("T")[0])
     .filter((value, index, self) => self.indexOf(value) === index)
     .sort();
-  const pullData: number[] = [];
+  const closedPulls: number[] = [];
+  const openPulls: number[] = [];
   if (dates)
     for (let i = 0; i < dates.length; i++) {
       pulls?.map((pull) => {
         if (pull.created_at.split("T")[0] === dates[i]) {
-          if (pullData[i] == null) pullData[i] = 1;
-          else pullData[i] = pullData[i] + 1;
+          if (pull.state === "closed") {
+            if (closedPulls[i] == null) closedPulls[i] = 1;
+            else closedPulls[i] = closedPulls[i] + 1;
+          } else {
+            if (openPulls[i] == null) openPulls[i] = 1;
+            else openPulls[i] = openPulls[i] + 1;
+          }
         }
       });
     }
   return {
     dates: dates,
-    pullData: pullData,
+    openPulls: openPulls,
+    closedPulls: closedPulls
   };
 };
 
@@ -93,24 +109,38 @@ export const prepReleases = (
   releases: ListReleasesResponse
 ): {
   dates: string[];
-  releaseData: number[];
+  draftReleases: number[];
+  preReleases: number[];
+  publishedReleases: number[];
 } => {
   const dates = releases
     ?.map((release) => release.created_at.split("T")[0])
     .filter((value, index, self) => self.indexOf(value) === index)
     .sort();
-  const releaseData: number[] = [];
+  const draftReleases: number[] = [];
+  const preReleases: number[] = [];
+  const publishedReleases: number[] = [];
   if (dates)
     for (let i = 0; i < dates.length; i++) {
       releases?.map((release) => {
         if (release.created_at.split("T")[0] === dates[i]) {
-          if (releaseData[i] == null) releaseData[i] = 1;
-          else releaseData[i] = releaseData[i] + 1;
+          if (release.draft === true) {
+            if (draftReleases[i] == null) draftReleases[i] = 1;
+            else draftReleases[i] = draftReleases[i] + 1;
+          } else if (release.prerelease === true) {
+            if (draftReleases[i] == null) draftReleases[i] = 1;
+            else draftReleases[i] = draftReleases[i] + 1;
+          } else {
+            if (publishedReleases[i] == null) publishedReleases[i] = 1;
+            else publishedReleases[i] = publishedReleases[i] + 1;
+          }
         }
       });
     }
   return {
     dates: dates,
-    releaseData: releaseData,
+    draftReleases: draftReleases,
+    preReleases: preReleases,
+    publishedReleases: publishedReleases
   };
 };

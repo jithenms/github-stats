@@ -15,18 +15,8 @@ const CommitTrend = ({ data }: CommitTrendProps) => {
   const { commits } = data;
 
   const [chartConfig, setChartConfig] = useState<
-    ChartData<"bar", (number | ScatterDataPoint | null)[], unknown>
-  >({
-    labels: [],
-    datasets: [
-      {
-        label: "Commits",
-        data: [],
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-    ],
-  });
+    ChartData<"line", (number | ScatterDataPoint | null)[], unknown>
+  >();
 
   useEffect(() => {
     if (commits) {
@@ -50,7 +40,7 @@ const CommitTrend = ({ data }: CommitTrendProps) => {
       <Card>
         <CardHeader title="Commits" />
         <CardContent>
-          {!commits ? <Skeleton variant="rectangular" height={375} /> : <Bar data={chartConfig} />}
+          {!commits || !chartConfig ? <Skeleton variant="rectangular" height={375} /> : <Bar data={chartConfig} />}
         </CardContent>
       </Card>
     </Grid>
