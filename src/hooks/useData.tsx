@@ -34,17 +34,19 @@ const useData = ({ owner, repo, since, until, open }: UserDataProps) => {
       {
         owner: owner,
         repo: repo,
+        state: "all",
+        direction: "desc",
       },
       (response, done) => {
+        response.data.map((res) => {
+          if (res.created_at < since) done();
+        });
         return response.data;
       }
     );
-    console.log(pulls.length);
-    pulls = pulls.filter(
-      (pull) => pull.created_at > since && pull.created_at < until
+    return pulls.filter(
+      (pull) => pull.created_at < until && pull.created_at > since
     );
-    console.log(pulls.length);
-    return pulls;
   };
 
   // TODO: Test the Date Filtering Here
@@ -54,15 +56,20 @@ const useData = ({ owner, repo, since, until, open }: UserDataProps) => {
       {
         owner: owner,
         repo: repo,
+        since: since,
+        state: "all",
+        direction: "desc",
       },
       (response, done) => {
+        response.data.map((res) => {
+          if (res.created_at < since) done();
+        });
         return response.data;
       }
     );
-    issues = issues.filter(
+    return issues.filter(
       (issue) => issue.created_at < until && issue.created_at > since
     );
-    return issues;
   };
 
   // TODO: Test the Date Filtering Here

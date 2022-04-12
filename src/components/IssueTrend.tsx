@@ -6,6 +6,7 @@ import { GithubData, ListCommitsResponse } from "../types";
 import { prepIssues } from "../util";
 
 Chart.register(...registerables);
+Chart.defaults.scale.grid.display = false;
 
 type IssueTrendProps = {
   data: GithubData;
@@ -15,8 +16,17 @@ const IssueTrend = ({ data }: IssueTrendProps) => {
   const { issues } = data;
 
   const [chartConfig, setChartConfig] = useState<
-    ChartData<"line", (number | ScatterDataPoint | null)[], unknown>
-  >();
+    ChartData<"bar", (number | ScatterDataPoint | null)[], unknown>
+  >({
+        labels: [],
+        datasets: [
+          {
+            label: "Issues",
+            data: [],
+            backgroundColor: "rgba(255, 99, 132, 0.5)"
+          },
+        ],
+      });
 
   useEffect(() => {
     if (issues) {
@@ -27,14 +37,12 @@ const IssueTrend = ({ data }: IssueTrendProps) => {
           {
             label: "Open",
             data: openIssues,
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            backgroundColor: "rgb(173,216,230, 0.5)"
           },
           {
             label: "Closed",
             data: closedIssues,
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            backgroundColor: "rgb(255, 99, 132, 0.5)"
           },
         ],
       });
@@ -46,7 +54,7 @@ const IssueTrend = ({ data }: IssueTrendProps) => {
       <Card>
         <CardHeader title="Issues" />
         <CardContent>
-          {!issues || !chartConfig ? <Skeleton variant="rectangular" height={375} /> : <Bar data={chartConfig} />}
+          {!issues ? <Skeleton variant="rectangular" height={375} /> : <Bar data={chartConfig} />}
         </CardContent>
       </Card>
     </Grid>

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Bar, Line } from "react-chartjs-2";
 import { Chart, ChartData, registerables, ScatterDataPoint } from "chart.js";
 import { Card, CardContent, CardHeader, Grid, Skeleton } from "@mui/material";
-import { GithubData, ListCommitsResponse } from "../types";
+import { GithubData } from "../types";
 import { prepCommits } from "../util";
 
 Chart.register(...registerables);
+Chart.defaults.scale.grid.display = false;
 
 type CommitTrendProps = {
   data: GithubData;
@@ -15,8 +16,17 @@ const CommitTrend = ({ data }: CommitTrendProps) => {
   const { commits } = data;
 
   const [chartConfig, setChartConfig] = useState<
-    ChartData<"line", (number | ScatterDataPoint | null)[], unknown>
-  >();
+    ChartData<"bar", (number | ScatterDataPoint | null)[], unknown>
+  >({
+        labels: [],
+        datasets: [
+          {
+            label: "Commits",
+            data: [],
+            backgroundColor: "rgba(255, 99, 132, 0.5)"
+          },
+        ],
+      });
 
   useEffect(() => {
     if (commits) {
@@ -27,8 +37,7 @@ const CommitTrend = ({ data }: CommitTrendProps) => {
           {
             label: "Commits",
             data: commitData,
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            backgroundColor: "rgba(255, 99, 132, 0.5)"
           },
         ],
       });
@@ -40,7 +49,7 @@ const CommitTrend = ({ data }: CommitTrendProps) => {
       <Card>
         <CardHeader title="Commits" />
         <CardContent>
-          {!commits || !chartConfig ? <Skeleton variant="rectangular" height={375} /> : <Bar data={chartConfig} />}
+          {!commits ? <Skeleton variant="rectangular" height={375} /> : <Bar data={chartConfig} />}
         </CardContent>
       </Card>
     </Grid>

@@ -5,7 +5,7 @@ const useInput = () => {
   const [input, setInput] = useState<Input>({
     owner: "facebook",
     repo: "react",
-    since: "2021-01-01",
+    since: "2022-03-01",
     until: new Date().toISOString().split("T")[0],
   });
   const [open, setOpen] = useState<boolean>(false);

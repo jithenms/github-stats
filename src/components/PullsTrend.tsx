@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import { Chart, ChartData, registerables, ScatterDataPoint } from "chart.js";
 import { Card, CardContent, CardHeader, Grid, Skeleton } from "@mui/material";
 import { GithubData, ListCommitsResponse } from "../types";
 import { prepPulls } from "../util";
 
 Chart.register(...registerables);
+Chart.defaults.scale.grid.display = false;
 
 type PullsProps = {
   data: GithubData;
@@ -15,8 +16,17 @@ const PullsTrend = ({ data }: PullsProps) => {
   const { pulls } = data;
 
   const [chartConfig, setChartConfig] = useState<
-    ChartData<"line", (number | ScatterDataPoint | null)[], unknown>
-  >();
+    ChartData<"bar", (number | ScatterDataPoint | null)[], unknown>
+  >({
+        labels: [],
+        datasets: [
+          {
+            label: "Pull Requests",
+            data: [],
+            backgroundColor: "rgba(255, 99, 132, 0.5)"
+          },
+        ],
+      });
 
   useEffect(() => {
     if (pulls) {
@@ -27,14 +37,12 @@ const PullsTrend = ({ data }: PullsProps) => {
           {
             label: "Open",
             data: openPulls,
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            backgroundColor: "rgb(173,216,230, 0.5)"
           },
           {
             label: "Closed",
             data: closedPulls,
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            backgroundColor: "rgba(255, 99, 132, 0.5)"
           },
         ],
       });
@@ -46,7 +54,7 @@ const PullsTrend = ({ data }: PullsProps) => {
       <Card>
         <CardHeader title="Pull Requests" />
         <CardContent>
-          {!pulls || !chartConfig ? <Skeleton variant="rectangular" height={375} /> : <Line data={chartConfig} />}
+          {!pulls ? <Skeleton variant="rectangular" height={375} /> : <Bar data={chartConfig} />}
         </CardContent>
       </Card>
     </Grid>
