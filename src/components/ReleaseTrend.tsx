@@ -84,7 +84,7 @@ const ReleaseTrend = ({ data }: ReleaseProps) => {
     // md is for medium sized screens, so on a medium sized screen and upward it fills 6/12 of the grid
     // sx applies additional styles to the grid
     <Grid item xs={12} md={6} sx={{ marginTop: 2 }}>
-      {/* Card is for displaying content and actions */}
+      {/* MUI Card is for displaying content and actions */}
       <Card>
         {/* Header with Title */}
         <CardHeader title="Releases" />
