@@ -5,6 +5,11 @@ import {
   ListReleasesResponse,
 } from "../types";
 
+/* 
+  Mock Data for Testing
+  Check Tests for Implementation
+*/
+
 export const mockCommits: ListCommitsResponse = [
   {
     sha: "0e922aab41eb47687aa78fdc9753ed884c4981ff",

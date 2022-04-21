@@ -146,6 +146,7 @@ const useData = ({ owner, repo, since, until, open }: UserDataProps) => {
     // this function is run everytime the value of open changes
   }, [open]);
 
+  // returns object of commits, pulls, issues, and releases
   return {
     commits: data?.commits,
     pulls: data?.pulls,
