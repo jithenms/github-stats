@@ -5,13 +5,17 @@ import App from "./App";
 /*
   Component which is rendered by React
   Renders App component which contains everything needed
-
 */
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Failed to find the root element");
-// Everything inside here is managed by React DOM
-// Reacts implementation of DOM takes care of updating DOM to match elements
+
+/* 
+  React takes care of updating the real DOM by maintaining a virtual DOM which aims
+  to keep the real DOM in sync by applying diffs and changes defined in Javascript
+  to the root element of the HTML.
+*/
+
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
