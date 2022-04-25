@@ -163,8 +163,10 @@ export const prepPulls = (
 
 // returns an array of releases count by date and an array of unique dates
 export const prepReleases = (
+  // parameter of releases from GitHub API response
   releases: ListReleasesResponse
 ): {
+  // return type
   dates: string[];
   draftReleases: number[];
   preReleases: number[];
