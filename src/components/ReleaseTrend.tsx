@@ -94,6 +94,7 @@ const ReleaseTrend = ({ data }: ReleaseProps) => {
           {!releases ? (
             <Skeleton variant="rectangular" height={375} />
           ) : (
+            // data is loaded from chartConfig which is set in state and updated in useEffect function
             <Bar data={chartConfig} />
           )}
         </CardContent>

@@ -84,7 +84,10 @@ const PullsTrend = ({ data }: PullsProps) => {
         {/* Content */}
         <CardContent>
           {/* if pulls is null render Skeleton component else the actual Bar chart */}
-          {!pulls ? <Skeleton variant="rectangular" height={375} /> : <Bar data={chartConfig} />}
+          {!pulls ? <Skeleton variant="rectangular" height={375} /> : 
+            // data is loaded from chartConfig which is set in state and updated in useEffect function
+            <Bar data={chartConfig} />
+          }
         </CardContent>
       </Card>
     </Grid>
