@@ -40,8 +40,8 @@ const CommitTrend = ({ data }: CommitTrendProps) => {
         ],
       });
 
-  // useEffect is a hook to run functionality
-  // when a certain dependency changes
+  // useEffect is a hook to run functionality when a certain dependency changes
+  // and is built-in to React
   useEffect(() => {
     // checks if commits exist
     if (commits) {

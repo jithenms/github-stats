@@ -125,6 +125,8 @@ const useData = ({ owner, repo, since, until, open }: UserDataProps) => {
     return releases;
   };
 
+  // useEffect is a hook to run functionality when a certain dependency changes
+  // and is built-in to React
   useEffect(() => {
     // checks if open is true
     if (open) {
